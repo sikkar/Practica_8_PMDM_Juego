@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Smash \'em All</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_juego">Juego</string>
+    <string name="start">Iniciar Juego</string>
+    <string name="normal">Normal</string>
+    <string name="dificil">Dificil</string>
+    <string name="insane">This is Madness!</string>
+    <string name="puntuacion">Puntuación maxima:</string>
+    <string name="none">----</string>
+</resources>
