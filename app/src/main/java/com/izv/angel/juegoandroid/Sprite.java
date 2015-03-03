@@ -19,7 +19,7 @@ public class Sprite {
     private static int anchoMax=0, altoMax=0;
     private static final int BMP_ROWS = 4;
     private static final int BMP_COLUMNS = 3;
-    private static final int MAX_SPEED = 15;
+    private static final int MAX_SPEED = 10;
     private int width;
     private int height;
     private int frameActual=0;

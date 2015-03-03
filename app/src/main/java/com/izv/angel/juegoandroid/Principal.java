@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class Principal extends ActionBarActivity {
     private String dificultad = "normal";
     private TextView tvPuntuacion;
     private Button btNormal, btDificil, btInsane;
+    private MediaPlayer music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class Principal extends ActionBarActivity {
         btNormal = (Button) findViewById(R.id.btNormal);
         btDificil = (Button) findViewById(R.id.btDificil);
         btInsane = (Button) findViewById(R.id.btInsane);
+        music = MediaPlayer.create(Principal.this,R.raw.music);
+        music.setLooping(true);
+        music.start();
     }
 
 
@@ -60,9 +65,16 @@ public class Principal extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void iniciar(View view){
        Intent i = new Intent(this,Juego.class);
        startActivityForResult(i, RESUL_JUEGO);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        music.release();
     }
 
     @Override
@@ -72,7 +84,6 @@ public class Principal extends ActionBarActivity {
 
             if (resultCode == RESULT_OK) {
                 final double score=data.getDoubleExtra("tiempo",0);
-                Log.v("score",score+"");
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setTitle("Puntuacion:");
                 LayoutInflater inflater = LayoutInflater.from(this);

@@ -8,6 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -31,6 +34,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private double tiempoI, tiempoT;
     boolean terminado = false;
     public static int poblacion = 4;
+    private SoundPool sound;
+    private int smash;
 
     public GameView(Context context) {
         super(context);
@@ -39,6 +44,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         bmpBlood = BitmapFactory.decodeResource(getResources(), R.mipmap.blood1);
         floor = BitmapFactory.decodeResource(getResources(), R.mipmap.floor);
         tiempoI = (double)Calendar.getInstance().getTimeInMillis();
+        sound = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
+        smash = sound.load(getContext(),R.raw.smash,1);
     }
 
     @Override
@@ -87,7 +94,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         for (Sprite sprite : sprites) {
             sprite.onDraw(canvas);
         }
-
     }
 
     private void createSprites() {
@@ -119,6 +125,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     Sprite sprite = sprites.get(i);
                     if (sprite.isCollition(x, y)) {
                         sprites.remove(sprite);
+                        sound.play(smash,0.8f,0.8f,0,0,1.5f);
                         temps.add(new SpriteTemp(temps, this, x, y, bmpBlood));
                         break;
                     }
@@ -134,7 +141,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             ((Activity) getContext()).setResult(Activity.RESULT_OK,i);
             ((Activity) getContext()).finish();
         }
-
         return true;
     }
 }
